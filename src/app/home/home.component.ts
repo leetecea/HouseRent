@@ -19,10 +19,25 @@ export class HomeComponent {
 
 housingLocationList: HousingLocation[] = [];
 
+filteredLocationList: HousingLocation[] = [];
+
 constructor(private housingService: HousingService) {
-  this.housingLocationList = this.housingService.getAllHousingLocations();
+    this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
+    this.housingLocationList = housingLocationList;
+    this.filteredLocationList = housingLocationList;
+  });
 }
   // Componente Home é pai do componente HousingLocation
   // por isso utilizasse o Input no HousingLocation, este vai receber a informações contidas aqui no Comp. Home
 
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredLocationList = this.housingLocationList;
+      return;
+    }
+
+    this.filteredLocationList = this.housingLocationList.filter(
+      housingLocation => housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+    );
+  }
 }
