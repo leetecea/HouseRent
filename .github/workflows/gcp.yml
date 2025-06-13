@@ -15,7 +15,10 @@ jobs:
       # Git checkout
       - name: Checkout
         uses: actions/checkout@v2
-
+        
+      - name: Verificar arquivos após checkout
+        run: ls -la
+        
       # Login to GCP
       - uses: google-github-actions/setup-gcloud@v0.2.0
         with:
